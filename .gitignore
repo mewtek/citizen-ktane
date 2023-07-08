@@ -1,0 +1,5 @@
+# Rust default build directory
+/target
+
+# VSCode auto-generated files
+/.vscode
