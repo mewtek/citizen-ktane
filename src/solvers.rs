@@ -6,6 +6,7 @@ pub struct Bomb {
     pub strikes: i32,
 }
 
+// These functions are pretty much in the order of the manual on https://bombmanual.com
 
 pub fn defuse_wires(wire_sequence: Vec<&str>, bomb_info: Bomb)
 {  
@@ -122,6 +123,16 @@ pub fn defuse_wires(wire_sequence: Vec<&str>, bomb_info: Bomb)
         println!("Cut the fourth wire.");
         return;
     }
+}
 
+pub fn defuse_button(button_color: String, button_text: String, bomb_info: Bomb)
+{
+    // TODO:
+    return;
+}
 
+pub fn defuse_keypads(symbols: Vec<&str>)
+{
+    // TODO:
+    return;
 }
