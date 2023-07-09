@@ -16,16 +16,19 @@ pub fn last_digit_odd(serial: String) -> bool
 /// Checks to see if the bomb's serial number has one or more vowels in it
 pub fn serial_has_vowels(serial: String) -> bool
 {
-    let vowels: Vec<char> = vec!['a', 'e', 'i', 'o', 'u'];
+    let vowels: Vec<char> = vec!['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
     let serial_chars: Vec<char> = serial.chars().collect();
 
     // This can probably be done without looping over the vowels vector but
     // im just gonna go ahead and do it like this for now
-    for i in 0..vowels.len()
+    for i in 0..serial_chars.len()
     {
-        if serial_chars.contains(&vowels[i])
+        for x in 0..vowels.len()
         {
-            return true;
+            if serial_chars[i] == vowels[x]
+            {
+                return true;
+            }
         }
     }
 
