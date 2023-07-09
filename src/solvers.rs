@@ -1,5 +1,8 @@
 use std::io::{self, Read};
 
+#[path = "../src/checks.rs"]    // For some reason rust tries to look in the solvers/ directory
+mod checks;
+
 pub struct Bomb {
     pub serial: String,
     pub car: bool,
