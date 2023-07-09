@@ -1,16 +1,19 @@
 use std::io;
 mod solvers;
+// mod tts;
 
 fn main() {
     // Bomb setup
     // TODO: This needs to use Google speech api or something, typing this all out is actually
     // completely disruptive to the actual game.
 
+    
+
     let mut serial = String::new();
     let mut car = String::new();
     let mut frk = String::new();
     let mut batteries: String = String::new();
-
+    // tts::speak("Test").ok();
     println!("BOMB SETUP.");
     println!("Bomb serial number: ");
     io::stdin().read_line(&mut serial).unwrap();
@@ -95,4 +98,11 @@ fn choose_defuse(bomb_info: solvers::Bomb)
         solvers::defuse_simon_says(bomb_info);
         return;
     }
+
+    if defuse_type.trim() == "words" || defuse_type.trim() == "whos on first"
+    {
+        solvers::defuse_words();
+        return;
+    }
 }
+

@@ -1,4 +1,5 @@
 use std::io::{self, Read};
+use std::collections::HashMap;
 
 #[path = "../src/checks.rs"]    // For some reason rust tries to look in the solvers/ directory
 mod checks;
@@ -259,4 +260,91 @@ pub fn defuse_simon_says(bomb_info: Bomb)
     }
     
     return;
+}
+
+
+pub fn defuse_words()
+{
+    let word_lists = HashMap::from([
+        ("READY", "YES, OKAY, WHAT, MIDDLE, LEFT, PRESS, RIGHT, BLANK, READY, NO, FIRST, UHHH, NOTHING, WAIT"),
+        ("FIRST", "LEFT, OKAY, YES, MIDDLE, NO, RIGHT, NOTHING, UHHH, WAIT, READY, BLANK, WHAT, PRESS, FIRST"),
+        ("NO", "BLANK, UHHH, WAIT, FIRST, WHAT, READY, RIGHT, YES, NOTHING, LEFT, PRESS, OKAY, NO, MIDDLE"),
+        ("BLANK", "WAIT, RIGHT, OKAY, MIDDLE, BLANK, PRESS, READY, NOTHING, NO, WHAT, LEFT, UHHH, YES, FIRST"),
+        ("NOTHING", "UHHH, RIGHT, OKAY, MIDDLE, YES, BLANK, NO, PRESS, LEFT, WHAT, WAIT, FIRST, NOTHING, READY"),
+        ("YES", "OKAY, RIGHT, UHHH, MIDDLE, FIRST, WHAT, PRESS, READY, NOTHING, YES, LEFT, BLANK, NO, WAIT"),
+        ("WHAT", "UHHH, WHAT, LEFT, NOTHING, READY, BLANK, MIDDLE, NO, OKAY, FIRST, WAIT, YES, PRESS, RIGHT"),
+        ("UHHH", "READY, NOTHING, LEFT, WHAT, OKAY, YES, RIGHT, NO, PRESS, BLANK, UHHH, MIDDLE, WAIT, FIRST"),
+        ("LEFT", "RIGHT, LEFT, FIRST, NO, MIDDLE, YES, BLANK, WHAT, UHHH, WAIT, PRESS, READY, OKAY, NOTHING"),
+        ("RIGHT", "YES, NOTHING, READY, PRESS, NO, WAIT, WHAT, RIGHT, MIDDLE, LEFT, UHHH, BLANK, OKAY, FIRST"),
+        ("MIDDLE", "BLANK, READY, OKAY, WHAT, NOTHING, PRESS, NO, WAIT, LEFT, MIDDLE, RIGHT, FIRST, UHHH, YES"),
+        ("OKAY", "MIDDLE, NO, FIRST, YES, UHHH, NOTHING, WAIT, OKAY, LEFT, READY, BLANK, PRESS, WHAT, RIGHT"),
+        ("WAIT", "UHHH, NO, BLANK, OKAY, YES, LEFT, FIRST, PRESS, WHAT, WAIT, NOTHING, READY, RIGHT, MIDDLE"),
+        ("PRESS", "RIGHT, MIDDLE, YES, READY, PRESS, OKAY, NOTHING, UHHH, BLANK, LEFT, FIRST, WHAT, NO, WAIT"),
+        ("YOU", "SURE, YOU ARE, YOUR, YOU'RE, NEXT, UH HUH, UR, HOLD, WHAT?, YOU, UH UH, LIKE, DONE, U"),
+        ("YOU ARE", "YOUR, NEXT, LIKE, UH HUH, WHAT?, DONE, UH UH, HOLD, YOU, U, YOU'RE, SURE, UR, YOU ARE"),
+        ("YOUR", "UH UH, YOU ARE, UH HUH, YOUR, NEXT, UR, SURE, U, YOU'RE, YOU, WHAT?, HOLD, LIKE, DONE"),
+        ("YOU'RE", "YOU, YOU'RE, UR, NEXT, UH UH, YOU ARE, U, YOUR, WHAT?, UH HUH, SURE, DONE, LIKE, HOLD"),
+        ("UR", "DONE, U, UR, UH HUH, WHAT?, SURE, YOUR, HOLD, YOU'RE, LIKE, NEXT, UH UH, YOU ARE, YOU"),
+        ("U", "UH HUH, SURE, NEXT, WHAT?, YOU'RE, UR, UH UH, DONE, U, YOU, LIKE, HOLD, YOU ARE, YOUR"),
+        ("UH HUH", "UH HUH, YOUR, YOU ARE, YOU, DONE, HOLD, UH UH, NEXT, SURE, LIKE, YOU'RE, UR, U, WHAT?"),
+        ("UH UH", "UR, U, YOU ARE, YOU'RE, NEXT, UH UH, DONE, YOU, UH HUH, LIKE, YOUR, SURE, HOLD, WHAT?"),
+        ("WHAT?", "YOU, HOLD, YOU'RE, YOUR, U, DONE, UH UH, LIKE, YOU ARE, UH HUH, UR, NEXT, WHAT?, SURE"),
+        ("DONE", "SURE, UH HUH, NEXT, WHAT?, YOUR, UR, YOU'RE, HOLD, LIKE, YOU, U, YOU ARE, UH UH, DONE"),
+        ("NEXT", "WHAT?, UH HUH, UH UH, YOUR, HOLD, SURE, NEXT, LIKE, DONE, YOU ARE, UR, YOU'RE, U, YOU"),
+        ("HOLD", "YOU ARE, U, DONE, UH UH, YOU, UR, SURE, WHAT?, YOU'RE, NEXT, HOLD, UH HUH, YOUR, LIKE"),
+        ("SURE", "YOU ARE, DONE, LIKE, YOU'RE, YOU, HOLD, UH HUH, UR, SURE, U, WHAT?, NEXT, YOUR, UH UH"),
+        ("LIKE", "YOU'RE, NEXT, U, UR, HOLD, DONE, UH UH, WHAT?, UH HUH, YOU, LIKE, SURE, YOU ARE, YOUR")
+    ]);
+    let mut display_txt = String::new();
+    let mut button_txt = String::new();
+
+    println!("What's on the display?");
+    io::stdin().read_line(&mut display_txt).unwrap();
+
+    // Middle left 
+    if display_txt.trim().to_lowercase() == "yes" || display_txt.trim().to_lowercase() == "nothing" || display_txt.trim().to_lowercase() == "led" || display_txt.trim().to_lowercase() == "they are"
+    {
+        println!("What's on the middle left?");
+        io::stdin().read_line(&mut button_txt).unwrap();
+        println!("{}", word_lists[button_txt.trim()]);
+    }
+
+    // Top right
+    if display_txt.trim().to_lowercase() == "first" || display_txt.trim().to_lowercase() == "okay" || display_txt.trim().to_lowercase() == "c"
+    {
+        println!("What's on the top right?");
+        io::stdin().read_line(&mut button_txt).unwrap();
+        println!("{}", word_lists[button_txt.trim()]);
+    }
+
+    // Bottom right
+    if display_txt.trim().to_lowercase() == "display" || display_txt.trim().to_lowercase() == "says" || display_txt.trim().to_lowercase() == "no" || display_txt.trim().to_lowercase() == "lead" || display_txt.trim().to_lowercase() == "hold on" || display_txt.trim().to_lowercase() == "you are" || display_txt.trim().to_lowercase() == "there" || display_txt.trim().to_lowercase() == "see" || display_txt.trim().to_lowercase() == "cee"
+    {
+        println!("What's on the bottom right?");
+        io::stdin().read_line(&mut button_txt).unwrap();
+        println!("{}", word_lists[button_txt.trim()]);
+    }
+
+    // Bottom left
+    if display_txt.trim().to_lowercase() == "blank display" || display_txt.trim().to_lowercase() == "reed" || display_txt.trim().to_lowercase() == "they're" || display_txt.trim().to_lowercase() == "leed"
+    {
+        println!("What's on the bottom left?");
+        io::stdin().read_line(&mut button_txt).unwrap();
+        println!("{}", word_lists[button_txt.trim()]);
+    }
+
+    // Middle right
+    if display_txt.trim().to_lowercase() == "red" || display_txt.trim().to_lowercase() == "read" || display_txt.trim().to_lowercase() == "your" || display_txt.trim().to_lowercase() == "you're" || display_txt.trim().to_lowercase() == "their" || display_txt.trim().to_lowercase() == "blank" || display_txt.trim().to_lowercase() == "you" {
+        println!("What's on the middle right?");
+        io::stdin().read_line(&mut button_txt).unwrap();
+        println!("{}", word_lists[button_txt.trim()]);
+    } 
+
+    // Top left
+    if display_txt.trim().to_lowercase() == "ur"
+    {
+        println!("What's on the top left?");
+        io::stdin().read_line(&mut button_txt).unwrap();
+        println!("{}", word_lists[button_txt.trim()]);
+    }
 }
