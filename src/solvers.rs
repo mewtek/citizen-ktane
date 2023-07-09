@@ -179,7 +179,7 @@ pub fn defuse_button(bomb_info: Bomb)
 }
 
 
-pub fn defuse_button_strip(bomb_info: Bomb)
+fn defuse_button_strip(bomb_info: Bomb)
 {
     let mut strip_color = String::new();
     println!("What color is the strip flashing?");
@@ -211,5 +211,11 @@ pub fn defuse_button_strip(bomb_info: Bomb)
 pub fn defuse_keypads(symbols: Vec<&str>)
 {
     // TODO:
+    return;
+}
+
+pub fn defuse_simon_says(bomb_info: Bomb)
+{
+
     return;
 }
