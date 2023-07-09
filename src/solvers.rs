@@ -3,6 +3,9 @@ use std::io::{self, Read};
 #[path = "../src/checks.rs"]    // For some reason rust tries to look in the solvers/ directory
 mod checks;
 
+// #[path = "../src/utils.rs"]
+// mod utils;
+
 pub struct Bomb {
     pub serial: String,
     pub car: bool,
@@ -15,12 +18,6 @@ pub struct Bomb {
 
 pub fn defuse_wires(wire_sequence: Vec<&str>, bomb_info: Bomb)
 {  
-    // I'm aware of how stupid this is but the process of getting a char itself to an integer is
-    // even more stupidly complicated.
-    let last_digit_string = bomb_info.serial.chars().last().unwrap().to_string();
-    let last_digit = last_digit_string.parse::<i32>().unwrap();
-
-
     if wire_sequence.len() == 3
     {
         if !wire_sequence.contains(&&"red")
@@ -47,7 +44,7 @@ pub fn defuse_wires(wire_sequence: Vec<&str>, bomb_info: Bomb)
 
     if wire_sequence.len() == 4
     {
-        if wire_sequence.iter().filter(|&n| *n == "red").count() > 1 && last_digit % 2 != 0
+        if wire_sequence.iter().filter(|&n| *n == "red").count() > 1 && checks::last_digit_odd(bomb_info.serial)
         {
             println!("Cut the last red wire.");
             return;
@@ -77,7 +74,7 @@ pub fn defuse_wires(wire_sequence: Vec<&str>, bomb_info: Bomb)
 
     if wire_sequence.len() == 5
     {
-        if wire_sequence[wire_sequence.len()-1] == "black" && last_digit % 2 != 0
+        if wire_sequence[wire_sequence.len()-1] == "black" && checks::last_digit_odd(bomb_info.serial)
         {
             println!("Cut the fourth wire.");
             return;
@@ -107,7 +104,7 @@ pub fn defuse_wires(wire_sequence: Vec<&str>, bomb_info: Bomb)
 
     if wire_sequence.len() == 6
     {
-        if !wire_sequence.contains(&"yellow") && last_digit % 2 != 0
+        if !wire_sequence.contains(&"yellow") && checks::last_digit_odd(bomb_info.serial)
         {
             println!("Cut the third wire.");
             return;
@@ -143,7 +140,7 @@ pub fn defuse_button(bomb_info: Bomb)
 
     if button_color.trim() == "blue" && button_text.trim() == "abort"
     {
-        defuse_button_strip(bomb_info);
+        defuse_button_strip();
         return;
     }
 
@@ -155,7 +152,7 @@ pub fn defuse_button(bomb_info: Bomb)
 
     if button_color.trim() == "white" && bomb_info.car
     {
-        defuse_button_strip(bomb_info);
+        defuse_button_strip();
         return;
     }
 
@@ -167,7 +164,7 @@ pub fn defuse_button(bomb_info: Bomb)
 
     if button_color.trim() == "yellow"
     {
-        defuse_button_strip(bomb_info);
+        defuse_button_strip();
         return;
     }
 
@@ -177,12 +174,12 @@ pub fn defuse_button(bomb_info: Bomb)
         return;
     }
 
-    defuse_button_strip(bomb_info);
+    defuse_button_strip();
     return;
 }
 
 
-fn defuse_button_strip(bomb_info: Bomb)
+fn defuse_button_strip()
 {
     let mut strip_color = String::new();
     println!("What color is the strip flashing?");
@@ -220,5 +217,46 @@ pub fn defuse_keypads(symbols: Vec<&str>)
 pub fn defuse_simon_says(bomb_info: Bomb)
 {
 
+    // TODO: Make this more "active" after implementing speech to text into the bot
+
+    if checks::serial_has_vowels(bomb_info.serial)
+    {
+        if bomb_info.strikes == 0
+        {
+            println!("Red -> Blue, Blue -> Red, Green -> Yellow, Yellow -> Green");
+            return;
+        }
+
+        if bomb_info.strikes == 1
+        {
+            println!("Red -> Yellow, Blue -> Green, Green -> Blue, Yellow -> Red");
+            return;
+        }
+
+        if bomb_info.strikes == 2
+        {
+            println!("Red -> Green, Blue -> Red, Green -> Yellow, Yellow -> Blue");
+            return;
+        }
+    }
+
+    if bomb_info.strikes == 0
+    {
+        println!("Red -> Blue, Blue -> Yellow, Yellow -> Green, Yellow -> Red");
+        return;
+    }
+
+    if bomb_info.strikes == 1
+    {
+        println!("Red , Blue, Green -> Yellow, Yellow -> Green");
+        return;
+    }
+
+    if bomb_info.strikes == 2
+    {
+        println!("Red -> Yellow, Blue -> Green, Green -> Blue, Yellow -> Red");
+        return;
+    }
+    
     return;
 }
