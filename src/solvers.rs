@@ -1,3 +1,5 @@
+use std::io::{self, Read};
+
 pub struct Bomb {
     pub serial: String,
     pub car: bool,
@@ -125,9 +127,84 @@ pub fn defuse_wires(wire_sequence: Vec<&str>, bomb_info: Bomb)
     }
 }
 
-pub fn defuse_button(button_color: String, button_text: String, bomb_info: Bomb)
+pub fn defuse_button(bomb_info: Bomb)
 {
-    // TODO:
+    let mut button_color = String::new();
+    let mut button_text = String::new();
+
+    println!("What color is the button?");
+    io::stdin().read_line(&mut button_color).unwrap();
+
+    println!("What does the button say?");
+    io::stdin().read_line(&mut button_text).unwrap();
+
+    if button_color.trim() == "blue" && button_text.trim() == "abort"
+    {
+        defuse_button_strip(bomb_info);
+        return;
+    }
+
+    if button_text.trim() == "detonate" && bomb_info.battery_count > 1
+    {
+        println!("Press and immediately release the button.");
+        return;
+    }
+
+    if button_color.trim() == "white" && bomb_info.car
+    {
+        defuse_button_strip(bomb_info);
+        return;
+    }
+
+    if bomb_info.battery_count > 2 && bomb_info.frq
+    {
+        println!("Press and immediately release the button.");
+        return;
+    }
+
+    if button_color.trim() == "yellow"
+    {
+        defuse_button_strip(bomb_info);
+        return;
+    }
+
+    if button_color.trim() == "red" && button_text.trim() == "hold"
+    {
+        println!("Press and immediately release the button.");
+        return;
+    }
+
+    defuse_button_strip(bomb_info);
+    return;
+}
+
+
+pub fn defuse_button_strip(bomb_info: Bomb)
+{
+    let mut strip_color = String::new();
+    println!("What color is the strip flashing?");
+    io::stdin().read_line(&mut strip_color).unwrap();
+
+    if strip_color.trim() == "blue"
+    {
+        println!("Release the button when there is a 4 in any position.");
+        return;
+    }
+
+    if strip_color.trim() == "white"
+    {
+        println!("Release the button when there is a 1 in any position.");
+        return;
+    }
+
+    if strip_color.trim() == "yellow"
+    {
+        println!("Release the button when there is a 5 in any position.");
+        return;
+    }
+
+    println!("Release the button when there is a 1 in any position.");
+
     return;
 }
 

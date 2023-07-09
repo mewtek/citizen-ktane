@@ -80,4 +80,10 @@ fn choose_defuse(bomb_info: solvers::Bomb)
         solvers::defuse_wires(wire_sequence, bomb_info);
         return;
     }
+
+    if defuse_type.trim() == "button"
+    {
+        solvers::defuse_button(bomb_info);
+        return;
+    }
 }
