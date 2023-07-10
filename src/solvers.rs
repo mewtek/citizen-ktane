@@ -186,25 +186,13 @@ fn defuse_button_strip()
     println!("What color is the strip flashing?");
     io::stdin().read_line(&mut strip_color).unwrap();
 
-    if strip_color.trim() == "blue"
+    match strip_color.trim()
     {
-        println!("Release the button when there is a 4 in any position.");
-        return;
+        "blue"=>println!("Release the button when there is a 4 in any position."),
+        "white"=>println!("Release the button when there is a 1 in any position."),
+        "yellow"=>println!("Release the button when there is a 5 in any position."),
+        _=>println!("Release the button when there is a 1 in any position.")
     }
-
-    if strip_color.trim() == "white"
-    {
-        println!("Release the button when there is a 1 in any position.");
-        return;
-    }
-
-    if strip_color.trim() == "yellow"
-    {
-        println!("Release the button when there is a 5 in any position.");
-        return;
-    }
-
-    println!("Release the button when there is a 1 in any position.");
 
     return;
 }
