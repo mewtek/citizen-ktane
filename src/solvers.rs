@@ -19,9 +19,6 @@ pub struct Bomb {
 }
 
 // These functions are pretty much in the order of the manual on https://bombmanual.com
-// TODO: Multiple things in this class can be made cleaner by using
-// match cases.
-
 
 pub fn defuse_wires(wire_sequence: Vec<&str>, bomb_info: Bomb)
 {  
