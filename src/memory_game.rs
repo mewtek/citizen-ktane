@@ -1,7 +1,4 @@
-use std::{io, result};
-
-use crate::solvers::memory_game;
-
+use std::{io};
 pub struct MemoryGameResult {
     button_pressed_label: i32,
     button_pressed_position: i32
