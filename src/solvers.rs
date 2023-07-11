@@ -210,41 +210,23 @@ pub fn defuse_simon_says(bomb_info: Bomb)
 
     if checks::serial_has_vowels(bomb_info.serial)
     {
-        if bomb_info.strikes == 0
+        match bomb_info.strikes
         {
-            println!("Red -> Blue, Blue -> Red, Green -> Yellow, Yellow -> Green");
-            return;
+            0=>println!("Red -> Blue, Blue -> Red, Green -> Yellow, Yellow -> Green"),
+            1=>println!("Red -> Yellow, Blue -> Green, Green -> Blue, Yellow -> Red"),
+            2=>println!("Red -> Green, Blue -> Red, Green -> Yellow, Yellow -> Blue"),
+            _=>println!("Red -> Blue, Blue -> Red, Green -> Yellow, Yellow -> Green")   // This should never be hit
         }
 
-        if bomb_info.strikes == 1
-        {
-            println!("Red -> Yellow, Blue -> Green, Green -> Blue, Yellow -> Red");
-            return;
-        }
-
-        if bomb_info.strikes == 2
-        {
-            println!("Red -> Green, Blue -> Red, Green -> Yellow, Yellow -> Blue");
-            return;
-        }
-    }
-
-    if bomb_info.strikes == 0
-    {
-        println!("Red -> Blue, Blue -> Yellow, Yellow -> Green, Yellow -> Red");
         return;
     }
 
-    if bomb_info.strikes == 1
+    match bomb_info.strikes
     {
-        println!("Red , Blue, Green -> Yellow, Yellow -> Green");
-        return;
-    }
-
-    if bomb_info.strikes == 2
-    {
-        println!("Red -> Yellow, Blue -> Green, Green -> Blue, Yellow -> Red");
-        return;
+        0=>println!("Red -> Blue, Blue -> Yellow, Yellow -> Green, Yellow -> Red"),
+        1=>println!("Red , Blue, Green -> Yellow, Yellow -> Green"),
+        2=>println!("Red -> Green, Blue -> Red, Green -> Yellow, Yellow -> Blue"),
+        _=>println!("Red -> Yellow, Blue -> Green, Green -> Blue, Yellow -> Red")   // This should never be hit
     }
     
     return;
