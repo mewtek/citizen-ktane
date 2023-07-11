@@ -4,6 +4,9 @@ use std::collections::HashMap;
 #[path = "../src/checks.rs"]    // For some reason rust tries to look in the solvers/ directory
 mod checks;
 
+#[path = "../src/memory_game.rs"]
+mod memory_game;
+
 // #[path = "../src/utils.rs"]
 // mod utils;
 
@@ -16,6 +19,9 @@ pub struct Bomb {
 }
 
 // These functions are pretty much in the order of the manual on https://bombmanual.com
+// TODO: Multiple things in this class can be made cleaner by using
+// match cases.
+
 
 pub fn defuse_wires(wire_sequence: Vec<&str>, bomb_info: Bomb)
 {  
@@ -317,4 +323,10 @@ pub fn defuse_words()
         io::stdin().read_line(&mut button_txt).unwrap();
         println!("{}", word_lists[button_txt.trim()]);
     }
+}
+
+pub fn defuse_memory()
+{
+    memory_game::stage_one();
+    return;
 }
