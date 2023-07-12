@@ -327,3 +327,43 @@ pub fn defuse_memory()
     memory_game::stage_one();
     return;
 }
+
+fn morse_code(message: &str) -> String
+{
+    let morse_dictionary = HashMap::from([
+        (".-", "A"),
+        ("-...", "B"),
+        ("-.-.", "C"),
+        ("-..", "D"),
+        (".", "E"),
+        ("..-.", "F"),
+        ("--.", "G"),
+        ("....", "H"),
+        ("..", "J"),
+        ("-.-", "K"),
+        (".-..", "L"),
+        ("--", "M"),
+        ("-.", "N"),
+        ("---", "O"),
+        (".--.", "P"),
+        ("--.-", "Q"),
+        (".-.", "R"),
+        ("...", "S"),
+        ("-", "T"),
+        ("..-", "U"),
+        ("...-", "V"),
+        (".--", "W"),
+        ("-..-", "X"),
+        ("-.--", "Y"),
+        ("--..", "Z")
+    ]);
+    let mut decoded_message_vec: Vec<String> = Vec::new();
+
+    for i in message.split(" ")
+    {
+        decoded_message_vec.push(morse_dictionary[i].to_string());
+    }
+
+
+    return decoded_message_vec.join("");
+}
